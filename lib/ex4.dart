@@ -16,7 +16,7 @@ void main() {
     //   ),
     // ),
 
-    // //Ex2
+    //Ex2
     // MaterialApp(
     //   home: Container(
     //     padding: const EdgeInsets.all(30),
@@ -27,7 +27,7 @@ void main() {
     //         color: Colors.blue[600],
     //         borderRadius: const BorderRadius.all(Radius.circular(10)),
     //       ),
-    //       child: Center(
+    //       child: const Center(
     //         child: Text(
     //           'CADT Student',
     //           style: TextStyle(fontSize: 30, color: Colors.black),
@@ -50,7 +50,7 @@ void main() {
     //             borderRadius: BorderRadius.all(Radius.circular(50)),
     //           ),
     //           margin: const EdgeInsets.all(20),
-    //           child: Center(
+    //           child: const Center(
     //             child: Text(
     //               'OOP',
     //               style: TextStyle(fontSize: 30, color: Colors.white),
@@ -62,10 +62,10 @@ void main() {
     //           width: double.infinity,
     //           decoration: BoxDecoration(
     //             color: Colors.blue[300],
-    //             borderRadius: BorderRadius.all(Radius.circular(50)),
+    //             borderRadius: const BorderRadius.all(Radius.circular(50)),
     //           ),
     //           margin: const EdgeInsets.all(20),
-    //           child: Center(
+    //           child: const Center(
     //             child: Text(
     //               'Dart',
     //               style: TextStyle(fontSize: 30, color: Colors.white),
@@ -75,20 +75,20 @@ void main() {
 
     //         Container(
     //           width: double.infinity,
-    //           decoration: BoxDecoration(
+    //           decoration: const BoxDecoration(
     //             gradient: LinearGradient(
     //               colors: [
-    //                 const Color.fromRGBO(100, 181, 246, 1),
-    //                 const Color.fromRGBO(30, 136, 229, 1),
-    //                 const Color.fromRGBO(11, 66, 148, 1),
-    //                 const Color.fromARGB(255, 6, 45, 103),
+    //                 Color.fromRGBO(100, 181, 246, 1),
+    //                 Color.fromRGBO(30, 136, 229, 1),
+    //                 Color.fromRGBO(11, 66, 148, 1),
+    //                 Color.fromARGB(255, 6, 45, 103),
     //               ],
     //               stops: [0.1, 0.5, 0.75, 0.95],
     //             ),
     //             borderRadius: BorderRadius.all(Radius.circular(50)),
     //           ),
     //           margin: const EdgeInsets.all(20),
-    //           child: Center(
+    //           child: const Center(
     //             child: Text(
     //               'Flutter',
     //               style: TextStyle(fontSize: 30, color: Colors.white),
@@ -97,7 +97,6 @@ void main() {
     //         ),
     //       ],
     //     ),
-
     //   ),
     // ),
 
@@ -105,17 +104,17 @@ void main() {
     MaterialApp(
       home: Container(
         padding: const EdgeInsets.all(30),
-        child: Column(
+        child: const Column(
           children: [
             CustomCard(title: 'OOP', color: Color.fromRGBO(187, 222, 251, 1)),
             CustomCard(title: 'DART', color: Color.fromRGBO(100, 181, 246, 1)),
             CustomCard.gradient(
               title: 'FLUTTER',
               gradientColor: [
-                    const Color.fromRGBO(100, 181, 246, 1),
-                    const Color.fromRGBO(30, 136, 229, 1),
-                    const Color.fromRGBO(11, 66, 148, 1),
-                    const Color.fromARGB(255, 6, 45, 103),
+                    Color.fromRGBO(100, 181, 246, 1),
+                    Color.fromRGBO(30, 136, 229, 1),
+                    Color.fromRGBO(11, 66, 148, 1),
+                    Color.fromARGB(255, 6, 45, 103),
                   ],
               stops: [0.1, 0.5, 0.75, 0.95],
             ),
@@ -132,11 +131,11 @@ class CustomCard extends StatelessWidget {
   final List<Color>? gradientColor;
   final List<double>? stops;
 
-  const CustomCard({required this.title, this.color = Colors.blue})
+  const CustomCard({super.key, required this.title, this.color = Colors.blue})
     : gradientColor = null,
       stops = null;
 
-  const CustomCard.gradient({
+  const CustomCard.gradient({super.key, 
     required this.title,
     required this.gradientColor,
     required this.stops,
@@ -146,7 +145,6 @@ class CustomCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-
         gradient: gradientColor != null
             ? LinearGradient(colors: gradientColor!, stops: stops)
             : null,
