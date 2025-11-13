@@ -61,9 +61,6 @@ class ProductCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(color: Colors.black, blurRadius: 4, offset: Offset(0, 2)),
-        ],
         color: Colors.white,
       ),
       child: Column(
