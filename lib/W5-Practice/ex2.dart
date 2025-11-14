@@ -23,12 +23,16 @@ class CustomCard extends StatelessWidget {
   final String title;
   final Color color;
   final Icon icon;
+
+  // Should have iconPosition and button type
   const CustomCard({
     super.key,
     required this.title,
     this.color = Colors.blue,
     required this.icon,
   });
+
+  // getColor based on button type
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class CustomCard extends StatelessWidget {
       margin: EdgeInsets.all(10),
       child: Center(
         child: Row(
-          children: <Widget>[
+          children: [
             Padding(padding: EdgeInsets.all(30)),
             icon,
             Padding(padding: EdgeInsets.all(20)),
