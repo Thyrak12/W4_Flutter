@@ -29,15 +29,8 @@ enum Product {
 }
 
 void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  runApp(
+    MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Text("Products")),
         body: Container(
@@ -52,8 +45,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 class ProductCard extends StatelessWidget {
@@ -68,9 +61,6 @@ class ProductCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(color: Colors.black, blurRadius: 4, offset: Offset(0, 2)),
-        ],
         color: Colors.white,
       ),
       child: Column(

@@ -59,6 +59,8 @@ flutter:
     - assets/ex3/dart.png
     - assets/ex3/firebase.png
     - assets/ex3/flutter.png
+    - assets/dice/
+    - assets/w4-s2/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

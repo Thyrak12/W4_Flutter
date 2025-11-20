@@ -5,14 +5,11 @@ void main() {
     MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Custom buttons')),
-        body: Column(
+        body: ListView(
           children: [
             CustomCard(
               city: 'Phnom Penh',
-              color: [
-                Colors.purple,
-                const Color.fromARGB(255, 174, 138, 180),
-              ],
+              color: [Colors.purple, const Color.fromARGB(255, 174, 138, 180)],
               temp: 12.2,
               minMax: [10, 40.0],
               imagePath: 'assets/ex4/cloudy.png',
@@ -101,7 +98,7 @@ class CustomCard extends StatelessWidget {
                 height: 160,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: color[0].withOpacity(0.3)
+                  color: color[0].withOpacity(0.3),
                 ),
               ),
             ),
