@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:w4_app/W8_Practice/EXERCISE-4/data/joker_data.dart';
-import 'package:w4_app/W8_Practice/EXERCISE-4/ui/joker_ui.dart';
-
-Color appColor = Colors.green[300] as Color;
+import 'package:w4_app/W9_Theory/Expense_Tracking/Data/data.dart';
+import 'package:w4_app/W9_Theory/Expense_Tracking/Model/model.dart';
+import 'package:w4_app/W9_Theory/Expense_Tracking/Ui/ui.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,44 +12,48 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: JokePage(),
-    );
+    return ExpensePage();
   }
 }
 
-class JokePage extends StatefulWidget {
+class ExpensePage extends StatefulWidget {
+  const ExpensePage({super.key});
+
   @override
-  State<JokePage> createState() => _JokePageState();
+  State<ExpensePage> createState() => _ExpensePageState();
 }
 
-class _JokePageState extends State<JokePage> {
-  void setFavorite(int index) {
-    setState(() {
-      for (var joke in jokes) {
-        joke.isFavorite = false;
-      }
-      jokes[index].isFavorite = true;
-    });
+class _ExpensePageState extends State<ExpensePage> {
+  List<Expense> currentExpenses = registeredExpenses;
+  void addExpense() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 200,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text('Modal BottomSheet'),
+                ElevatedButton(
+                  child: const Text('Close BottomSheet'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: appColor,
-        title: const Text("Favorite Jokes"),
-      ),
-      body: ListView.builder(
-        itemCount: jokes.length,
-        itemBuilder: (context, index) {
-          return FavoriteCard(
-            jokeModel: jokes[index],
-            onTapFavorite: () => setFavorite(index),
-          );
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ExpensesView(currentExpenses),
     );
   }
 }

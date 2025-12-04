@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
 }
 
 class JokePage extends StatefulWidget {
+  const JokePage({super.key});
+
   @override
   State<JokePage> createState() => _JokePageState();
 }

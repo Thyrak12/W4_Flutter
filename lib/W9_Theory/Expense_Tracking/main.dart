@@ -1,9 +1,17 @@
-import 'Model/model.dart';
+import 'package:flutter/material.dart';
+import 'package:w4_app/W9_Theory/Expense_Tracking/Data/data.dart';
+import 'package:w4_app/W9_Theory/Expense_Tracking/Ui/ui.dart';
 
-void main(){
-  Expense firstFood = Expense('Burger', 20, DateTime.now(), ExpenseType.food);
-  Expense firstShoe = Expense('Shoe', 50, DateTime.now(), ExpenseType.travel);
+void main() {
+  runApp(const MyApp());
+}
 
-  print(firstFood.id);
-  print(firstShoe.id);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ExpensesView(registeredExpenses),
+    );
+  }
 }
