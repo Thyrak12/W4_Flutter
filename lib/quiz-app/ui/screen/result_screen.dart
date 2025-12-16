@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:w4_app/quiz-app/model/quiz_model.dart';
+import '../widgets/answer_option.dart';
+import '../widgets/question_circle.dart';
+import '../widgets/main_button.dart';
 
 class ResultScreen extends StatelessWidget {
   final Quiz quiz;
@@ -11,8 +14,8 @@ class ResultScreen extends StatelessWidget {
     required this.onRestart,
   });
 
-  Color getColor(bool isCorrect){
-    return isCorrect ? Colors.green : Colors.red;
+  Color getColor(bool correct) {
+    return correct ? Colors.green : Colors.red;
   }
 
   @override
@@ -30,60 +33,30 @@ class ResultScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 22),
             ),
             const SizedBox(height: 20),
-
-            ...quiz.questions.map((question) {
-              final i = quiz.questions.indexOf(question);
-              final userAnswer = quiz.answers[i].userChoice;
+            ...quiz.questions.map((q) {
+              final i = quiz.questions.indexOf(q);
+              final selected = quiz.answers[i].userChoice;
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    QuestionCircle(questionIndex: i, color: getColor(question.correctChoice == userAnswer)),
-                    const SizedBox(width: 10,),
+                    QuestionCircle(
+                      index: i,
+                      color: getColor(q.correctChoice == selected),
+                    ),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          question.title,
-                          style: const TextStyle(fontSize: 18),
-                        ),
+                        Text(q.title, style: const TextStyle(fontSize: 18)),
                         const SizedBox(height: 5),
-                  
-                        ...question.choice.map((c) {
-                          IconData iconData;
-                          Color color;
-                    
-                          if (c == question.correctChoice) {
-                            iconData = Icons.check_circle;
-                            color = Colors.green;
-                          } else if (c == userAnswer) {
-                            iconData = Icons.cancel;
-                            color = Colors.red;
-                          } else {
-                            iconData = Icons.circle_outlined;
-                            color = Colors.grey;
-                          }
-                    
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: Row(
-                              children: [
-                                Icon(iconData, color: color),
-                                const SizedBox(width: 8),
-                                Text(
-                                  c,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: color,
-                                    fontWeight: c == question.correctChoice
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ...q.choice.map((c) {
+                          return AnswerOptionRow(
+                            choice: c,
+                            isCorrect: c == q.correctChoice,
+                            isSelected: c == selected,
                           );
                         }),
                       ],
@@ -93,9 +66,9 @@ class ResultScreen extends StatelessWidget {
               );
             }),
             const SizedBox(height: 40),
-            ElevatedButton(
+            MainButton(
+              title: "Restart Quiz",
               onPressed: onRestart,
-              child: const Text("Restart Quiz"),
             ),
           ],
         ),
@@ -103,31 +76,3 @@ class ResultScreen extends StatelessWidget {
     );
   }
 }
-
-class QuestionCircle extends StatelessWidget {
-  final int questionIndex;
-  final Color color;
-
-  const QuestionCircle({
-    super.key,
-    required this.questionIndex,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 20,
-      backgroundColor: color,
-      child: Text(
-        '${questionIndex + 1}',
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-        ),
-      ),
-    );
-  }
-}
-

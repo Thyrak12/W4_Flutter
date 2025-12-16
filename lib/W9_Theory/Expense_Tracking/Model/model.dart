@@ -10,5 +10,5 @@ class Expense{
   DateTime date;
   ExpenseType category;
 
-  Expense(this.title, this.amount, this.date, this.category);
+  Expense(this.title, this.amount, this.date, this.category, {required String title});
 }

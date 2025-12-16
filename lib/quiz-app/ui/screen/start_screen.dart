@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import '../widgets/main_button.dart';
 
 class StartScreen extends StatelessWidget {
   final VoidCallback onStart;
-  const StartScreen({super.key, required this.onStart});
+
+  const StartScreen({
+    super.key,
+    required this.onStart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +21,9 @@ class StartScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                onStart();
-              },
-              child: const Text("Start"),
+            MainButton(
+              title: "Start",
+              onPressed: onStart,
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:w4_app/quiz-app/model/quiz_model.dart';
+import '../widgets/choice_button.dart';
 
 class QuestionScreen extends StatelessWidget {
   final Quiz quiz;
@@ -26,17 +27,13 @@ class QuestionScreen extends StatelessWidget {
           children: [
             Text(question.title, style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 20),
-
             ...question.choice.map((c) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    quiz.addAnswer(Answer(userChoice: c, question: question));
-                    onChangeScreen();
-                  },
-                  child: Text(c),
-                ),
+              return ChoiceButton(
+                label: c,
+                onTap: () {
+                  quiz.addAnswer(Answer(userChoice: c, question: question));
+                  onChangeScreen();
+                },
               );
             }),
           ],

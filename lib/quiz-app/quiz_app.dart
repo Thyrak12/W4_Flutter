@@ -71,8 +71,6 @@ class _QuizAppState extends State<QuizApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: changeScreen(),
-    );
+    return MaterialApp(home: changeScreen());
   }
 }
