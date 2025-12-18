@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../models/grocery.dart';
+import 'package:uuid/uuid.dart';
+
+final _uuid = Uuid();
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -12,7 +15,6 @@ class NewItem extends StatefulWidget {
 }
 
 class _NewItemState extends State<NewItem> {
-
   // Default settings
   static const defautName = "New grocery";
   static const defaultQuantity = 1;
@@ -26,10 +28,7 @@ class _NewItemState extends State<NewItem> {
   @override
   void initState() {
     super.initState();
-
-    // Initialize intputs with default settings
-    _nameController.text = defautName;
-    _quantityController.text = defaultQuantity.toString();
+    onReset();
   }
 
   @override
@@ -43,10 +42,56 @@ class _NewItemState extends State<NewItem> {
 
   void onReset() {
     // Will be implemented later - Reset all fields to the initial values
+    setState(() {
+      _nameController.text = defautName;
+      _quantityController.text = defaultQuantity.toString();
+      _selectedCategory = defaultCategory;
+    });
+  }
+
+  void showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Invalid Input'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop,
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool validation() {
+    final name = _nameController.text.trim();
+    final quantity = int.tryParse(_quantityController.text);
+
+    if (name.isEmpty) {
+      showErrorDialog('Name cannot be empty');
+      return false;
+    }
+
+    if (quantity == null || quantity <= 0) {
+      showErrorDialog('Quantity must be a positive number');
+      return false;
+    }
+
+    return true;
   }
 
   void onAdd() {
+    if (!validation()) return;
     // Will be implemented later - Create and return the new grocery
+    Grocery newGrocery = Grocery(
+      id: _uuid.v4(),
+      name: _nameController.text,
+      quantity: int.tryParse(_quantityController.text)!,
+      category: _selectedCategory,
+    );
+    Navigator.pop(context, newGrocery);
   }
 
   @override
@@ -76,7 +121,22 @@ class _NewItemState extends State<NewItem> {
                 Expanded(
                   child: DropdownButtonFormField<GroceryCategory>(
                     initialValue: _selectedCategory,
-                    items: [  ],
+                    items: GroceryCategory.values.map((category) {
+                      return DropdownMenuItem<GroceryCategory>(
+                        value: category,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 16,
+                              height: 16,
+                              color: category.color,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(category.label),
+                          ],
+                        ),
+                      );
+                    }).toList(),
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
@@ -93,10 +153,7 @@ class _NewItemState extends State<NewItem> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(onPressed: onReset, child: const Text('Reset')),
-                ElevatedButton(
-                  onPressed: onAdd,
-                  child: const Text('Add Item'),
-                ),
+                ElevatedButton(onPressed: onAdd, child: const Text('Add Item')),
               ],
             ),
           ],

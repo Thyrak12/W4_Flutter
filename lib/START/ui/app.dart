@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:w4_app/START/ui/expenses/expense_category.dart';
 import '../models/expense.dart';
 import 'expenses/expense_form.dart';
 import 'expenses/expenses.dart';
@@ -44,6 +45,31 @@ class _AppState extends State<App> {
     }
   }
 
+  void onDelete(int index) {
+    final removedExpense = _expenses[index];
+    setState(() {
+      _expenses.removeAt(index);
+    });
+
+    ScaffoldMessenger.of(
+      context,
+    ).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Deleted "${removedExpense.title}"'),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _expenses.insert(index, removedExpense); // restore at same index
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,13 +84,13 @@ class _AppState extends State<App> {
         backgroundColor: Colors.blue[700],
         title: const Text('Ronan-The-Best Expenses App'),
       ),
-      body: ExpensesView(
-        expenses: _expenses,
-        onDelete: (index) => {
-          setState(() {
-            _expenses.removeAt(index);
-          }),
-        },
+      body: Column(
+        children: [
+          SizedBox(height: 100, child: ExpenseCategory(expenses: _expenses)),
+          Expanded(
+            child: ExpensesView(expenses: _expenses, onDelete: onDelete),
+          ),
+        ],
       ),
     );
   }

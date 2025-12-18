@@ -59,7 +59,7 @@ class ExpenseItem extends StatelessWidget {
                     expense.title,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text("${expense.amount.toStringAsPrecision(2)} \$"),
+                  Text("${expense.amount} \$"),
                 ],
               ),
               Spacer(),

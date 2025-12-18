@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:w4_app/START-2/models/grocery.dart';
+import 'package:w4_app/START-2/ui/groceries/grocery_form.dart';
 
 import '../../data/mock_grocery_repository.dart';
 
@@ -11,8 +12,15 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
-  void onCreate() {
+  void onCreate() async {
     // TODO-4 - Navigate to the form screen using the Navigator push
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => (NewItem())),
+    );
+    setState(() {
+      dummyGroceryItems.add(result);
+    });
   }
 
   @override
@@ -32,7 +40,12 @@ class _GroceryListState extends State<GroceryList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Groceries'),
-        actions: [IconButton(onPressed: () => {}, icon: const Icon(Icons.add))],
+        actions: [
+          IconButton(
+            onPressed: () => {onCreate()},
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: content,
     );
@@ -48,14 +61,9 @@ class GroceryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO-2 - Display groceries with an Item builder and  LIst Tile
     return ListTile(
-            leading: Container(
-              width: 10,
-              height: 10,
-              color: grocery.category.color,
-            ),
-            title: Text(grocery.name),
-            trailing: Text('${grocery.quantity}'),
-            
-          );
+      leading: Container(width: 10, height: 10, color: grocery.category.color),
+      title: Text(grocery.name),
+      trailing: Text('${grocery.quantity}'),
+    );
   }
 }
